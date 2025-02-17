@@ -609,7 +609,7 @@ import { Navbar, Nav, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; // Link for navigation
 import logo from "../assets/logo.jpg";
 import Footer from './components/Footer';
-
+import axios from 'axios';
 const LoginPage = () => {
   const navigate = useNavigate(); // Initialize navigate
   const [formData, setFormData] = useState({
@@ -622,7 +622,7 @@ const LoginPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  /*const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
 
@@ -636,6 +636,43 @@ const LoginPage = () => {
     } else {
       alert('Invalid credentials. Please try again.');
     }
+  };*/
+
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+     const emailLocalPart = formData.email.split('@')[0];
+  
+    // Define the API URL for authentication
+    const studentApiUrl = 'http://localhost:5167/api/Student/Login'; // Replace with your actual API URL
+    const adminApiUrl = 'http://localhost:5167/api/Admin/Admin-Login';
+
+    // Send POST request with email and password data
+
+    const apiUrl = /^\d+$/.test(emailLocalPart) ? studentApiUrl : adminApiUrl;
+
+    axios.post(apiUrl, {
+      email: formData.email,
+      password: formData.password
+    })
+    .then((response) => {
+      // Extract the local part of the email (before '@')
+      const emailLocalPart = formData.email.split('@')[0];
+      console.log(response.data);
+      sessionStorage.setItem("token", response.data.token);
+      // Check if the local part consists only of digits (student email)
+      if (/^\d+$/.test(emailLocalPart)) {
+        navigate('/StudentLandingPage');
+      } else {
+        navigate('/AdminDashboardLandingPage');
+      }
+      
+    })
+    .catch((error) => {
+      console.error('Error during login:', error);
+      alert('Invalid credentials. Please try again.');
+    });
   };
 
   return (

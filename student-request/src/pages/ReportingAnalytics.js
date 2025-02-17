@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { saveAs } from 'file-saver';
 import { jsPDF } from 'jspdf';
 import { Chart } from 'react-google-charts';
+import axios from 'axios';
 
 const ReportingAnalytics = () => {
   const [reports, setReports] = useState({
@@ -14,36 +15,34 @@ const ReportingAnalytics = () => {
   const [monthlyData, setMonthlyData] = useState([]);
 
   useEffect(() => {
-    // Mock data fetching for demonstration purposes
     const fetchReports = async () => {
-      const mockReports = {
-        totalRequests: 120,
-        approvedRequests: 90,
-        distributedComputers: 85,
-        awaitingComputers: 30,
-      };
-
-      const mockMonthlyData = [
-        ["Month", "Requests"],
-        ["January", 20],
-        ["February", 15],
-        ["March", 25],
-        ["April", 30],
-        ["May", 10],
-        ["June", 20],
-      ];
-
-      setReports(mockReports);
-      setMonthlyData(mockMonthlyData);
+      try {
+        const allApplicationsResponse = await axios.get("http://localhost:5167/api/Application/applications-count");
+        const approvedApplicationsResponse = await axios.get("http://localhost:5167/api/Application/get-approved-applications");
+  
+        console.log("All Applications Response:", allApplicationsResponse.data);
+        console.log("Approved Applications Response:", approvedApplicationsResponse.data);
+  
+        setReports({
+          totalRequests: allApplicationsResponse.data.length || 0, // Assuming it's an array
+          approvedRequests: approvedApplicationsResponse.data.length || 0,
+          distributedComputers: 85,
+          awaitingComputers: 30,
+        });
+      } catch (error) {
+        console.error("Error fetching reports:", error);
+      }
     };
-
+  
     fetchReports();
   }, []);
+  
+
 
   const exportAsPDF = () => {
     const doc = new jsPDF();
     doc.text("Reporting and Analytics", 10, 10);
-    doc.text(`Total Requests: ${reports.totalRequests}`, 10, 20);
+    doc.text(`Total Requests: ${reports.totalRequests}`,10,10);
     doc.text(`Approved Requests: ${reports.approvedRequests}`, 10, 30);
     doc.text(`Distributed Computers: ${reports.distributedComputers}`, 10, 40);
     doc.text(`Awaiting Computers: ${reports.awaitingComputers}`, 10, 50);
