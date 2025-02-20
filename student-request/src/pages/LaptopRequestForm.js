@@ -572,6 +572,7 @@
 // 
 import axios from 'axios';
 import React, { useState } from 'react';
+import { ToastContainer, toast } from "react-toastify";
 
 const LaptopRequestForm = () => {
   const [formData, setFormData] = useState({
@@ -582,7 +583,7 @@ const LaptopRequestForm = () => {
     academicYear: '',
     File: null, // File data
   });
-
+  const [selectedFileName, setSelectedFileName] = useState("");
   const token = sessionStorage.getItem('token');
 
   const handleChange = (e) => {
@@ -592,12 +593,12 @@ const LaptopRequestForm = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-  
     if (file) {
-      console.log("File selected:", file.name); // Debugging
-      setFormData((prev) => ({ ...prev, File: file }));
-    } else {
-      console.log("No file selected"); // Debugging
+      setFormData((prevData) => ({
+        ...prevData,
+        File: file,
+      }));
+      setSelectedFileName(file.name); // Store file name
     }
   };
   
@@ -625,7 +626,14 @@ const LaptopRequestForm = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
+      if(response.data.flag)
+      {
+        toast.success(response.data.message);
+      }
+      else{
+        toast.error(response.data.message); 
+      }
       console.log("Response:", response.data);
     } catch (e) {
       console.error("Something went wrong! Please try again later.", e);
@@ -660,7 +668,7 @@ const LaptopRequestForm = () => {
         <h2 style={{ textAlign: 'center', color: '#D50032', fontWeight: 'bold' }}>
           Computer Application Form
         </h2>
-
+        <ToastContainer />
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '15px' }}>
             <label htmlFor="Name" style={{ display: 'block', color: '#003366', fontWeight: 'bold' }}>
@@ -772,7 +780,7 @@ const LaptopRequestForm = () => {
             />
           </div>
 
-          <div style={{ marginBottom: "15px" }}>
+       <div style={{ marginBottom: "15px" }}>
   <label
     htmlFor="supportingDocuments"
     style={{ display: "block", color: "#003366", fontWeight: "bold" }}
@@ -782,17 +790,24 @@ const LaptopRequestForm = () => {
   <input
     type="file"
     id="supportingDocuments"
-    name="File" // Must match backend DTO property
+    name="File"
     onChange={handleFileChange}
     required
     style={{
       width: "100%",
       padding: "10px",
       borderRadius: "4px",
-      border: "1px solid #003366", // Blue border
+      border: "1px solid #003366",
     }}
   />
-    </div>
+  
+  {/* Display file name */}
+  {selectedFileName && (
+    <p style={{ color: "#003366", marginTop: "5px", fontWeight: "bold" }}>
+      Selected file: {selectedFileName}
+    </p>
+  )}
+</div>
 
           <button
             type="submit"

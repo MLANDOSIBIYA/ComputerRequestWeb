@@ -1,6 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const StatusPage = ({ status = 'Pending' }) => {
+const StatusPage = () => {
+  const [status, setStatus] = useState('Pending');
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const token = sessionStorage.getItem('token');
+        const response = await axios.get('http://localhost:5167/api/Student/my-application-status', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Extract status from response data
+        setStatus(response.data.status); 
+      } catch (error) {
+        console.error('Error fetching status:', error);
+      }
+    };
+
+    fetchStatus();
+  }, []);
+
   return (
     <div
       style={{
@@ -8,9 +29,9 @@ const StatusPage = ({ status = 'Pending' }) => {
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh',
-        backgroundColor: '#003366', 
-        color: '#fff', 
-        marginTop: "-100px",
+        backgroundColor: '#003366',
+        color: '#fff',
+        marginTop: '-100px',
       }}
     >
       <div
