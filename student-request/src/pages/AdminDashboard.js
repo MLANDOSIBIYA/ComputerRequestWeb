@@ -61,8 +61,8 @@ const AdminDashboard = () => {
     setUpdatingId(id);
 
     try {
-      const apiUrl = `http://localhost:5167/api/Application/Update-ApplicationStatus/${id}?applicationStatus=Assigned`;
-      await axios.put(apiUrl, { status: "Assigned" });
+      const apiUrl = `http://localhost:5167/api/Computer/assign-computer/${102423456}`;
+      await axios.put(apiUrl);
 
       const updatedRequests = requests.map((request) =>
         request.id === id ? { ...request, status: "Assigned" } : request
@@ -80,7 +80,7 @@ const AdminDashboard = () => {
 
   return (
     <div style={{ backgroundColor: "#003366", color: "#ffffff", minHeight: "100vh", padding: "20px" }}>
-      <h1 style={{ textAlign: "center", color: "#FFD700" }}>Admin Dashboard</h1>
+      {/* <h1 style={{ textAlign: "center", color: "#FFD700" }}>Admin Dashboard</h1> */}
 
       <div style={{ display: "flex", justifyContent: "space-around", marginBottom: "20px" }}>
         <div style={{ backgroundColor: "#D50032", padding: "20px", borderRadius: "8px", textAlign: "center" }}>
@@ -91,13 +91,10 @@ const AdminDashboard = () => {
           <h3>Assigned</h3>
           <p>{metrics.assignedRequests}</p>
         </div>
-        <div style={{ backgroundColor: "#D50032", padding: "20px", borderRadius: "8px", textAlign: "center" }}>
-          <h3>Pending</h3>
-          <p>{metrics.pendingRequests}</p>
-        </div>
+        
       </div>
 
-      <h2 style={{ color: "#FFD700" }}>Request Management</h2>
+      <h2 style={{ color: "#FFD700" }}>Application Management</h2>
       <table style={{ width: "100%", backgroundColor: "#ffffff", color: "#000", borderRadius: "8px", overflow: "hidden" }}>
         <thead>
           <tr>

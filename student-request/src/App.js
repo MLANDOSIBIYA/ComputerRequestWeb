@@ -46,6 +46,8 @@ import ImpactTracking from './pages/ImpactTracking';
 import ResetPassword from './pages/ResetPassword';
 import HelpSection from './pages/HelpSection';
 import Layout from './pages/components/Layout';
+import TermsOfUse from './pages/TermsOfUse'
+
 
 
 
@@ -86,6 +88,7 @@ function App() {
         <Route path="/ImpactTracking" element={<ImpactTracking />} />
         <Route path="/HelpSection" element={<HelpSection />} />
         <Route path="/Layout" element={<Layout />} />
+        <Route path="/terms-of-use"    element={<TermsOfUse/>}/>
        
        
       </Routes>

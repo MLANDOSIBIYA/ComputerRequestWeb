@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const StatusPage = () => {
-  const [status, setStatus] = useState('Pending');
+  const [status, setStatus] = useState('You have not applied yet!');
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -44,8 +44,8 @@ const StatusPage = () => {
           textAlign: 'center',
         }}
       >
-        <h2 style={{ color: '#D50032', fontWeight: 'bold' }}>Request Status</h2>
-        <p style={{ fontSize: '18px', color: '#003366' }}>Your current request status:</p>
+        <h2 style={{ color: '#D50032', fontWeight: 'bold' }}>Application Status</h2>
+        <p style={{ fontSize: '18px', color: '#003366' }}>Your current application status:</p>
         <p
           style={{
             fontSize: '24px',

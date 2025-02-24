@@ -952,12 +952,12 @@
 
 // export default AboutPage;
 
-
 import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
 import Footer from "./Footer";
+import BgImage from './BgImage.jpg'; // Import background image
 
 const AboutPage = () => {
   return (
@@ -968,6 +968,9 @@ const AboutPage = () => {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
+        backgroundImage: `url(${BgImage})`, 
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
     >
       {/* Navbar: Make it fill the width and top */}
@@ -989,16 +992,38 @@ const AboutPage = () => {
             Tshwane University of Technology
           </span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: "#fff" }} />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: "#fff", marginLeft: "auto", backgroundColor: "white"}} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto" style={{ alignItems: "center" }}>
             <Link to="/">
-              <Button className="btn btn-danger me-2 fw-bold" style={{ fontSize: "0.9rem" }}> {/* Reduced font size */}
+              <Button 
+              style={{
+                backgroundColor: '#D50032',
+                border: 'none',
+                color: '#fff',
+                padding: '10px 20px',
+                borderRadius: '4px',
+                fontWeight: 'bold',
+                marginRight: '10px',
+                marginBottom: '15px',
+                
+              }}>
                 Home
               </Button>
             </Link>
             <Link to="/login">
-              <Button className="btn btn-danger fw-bold" style={{ fontSize: "0.9rem" }}> {/* Reduced font size */}
+              <Button 
+              style={{
+                backgroundColor: '#D50032',
+                border: 'none',
+                color: '#fff',
+                padding: '10px 20px',
+                borderRadius: '4px',
+                fontWeight: 'bold',
+                marginRight: '10px',
+                marginBottom: '15px',
+                
+              }}>
                 Login
               </Button>
             </Link>
@@ -1017,7 +1042,10 @@ const AboutPage = () => {
           margin: "70px auto 20px", // Adjusted top margin
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           flex: 1,
-          marginBottom:"100px"
+          marginBottom:"50px",
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          marginTop: "100px",
+
         }}
       >
         <h1 style={{ textAlign: "center", color: "#eb0920", marginBottom: "20px" }}> {/* Reduced margin */}

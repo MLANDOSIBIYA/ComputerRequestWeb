@@ -809,21 +809,40 @@ const LaptopRequestForm = () => {
   )}
 </div>
 
-          <button
-            type="submit"
-            style={{
-              padding: '10px',
-              backgroundColor: '#D50032',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              marginTop: '20px',
+          {/* <button
+           type="submit"
+           style={{
+             padding: '10px',
+             backgroundColor: '#D50032', // Red background for the button
+             color: 'white',
+             border: 'none',
+             borderRadius: '4px',
+             fontWeight: 'bold',
+             cursor: 'pointer',
+             marginTop: '20px',
             }}
           >
             Submit Request
-          </button>
+          </button> */}
+          <button
+  type="submit"
+  style={{
+    padding: '10px',
+    backgroundColor: '#D50032', // Red background for the button
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    marginTop: '20px',
+    width: '95%', // Make the button almost as wide as the form
+    display: 'block', // Ensures the button spans the width
+    marginLeft: 'auto', // Centers the button if the form is not full width
+    marginRight: 'auto', // Centers the button
+  }}
+>
+  Submit Request
+</button>
         </form>
       </div>
     </div>

@@ -610,6 +610,8 @@ import { Link } from 'react-router-dom'; // Link for navigation
 import logo from "../assets/logo.jpg";
 import Footer from './components/Footer';
 import axios from 'axios';
+import BgImage from './components/BgImage.jpg';
+
 const LoginPage = () => {
   const navigate = useNavigate(); // Initialize navigate
   const [formData, setFormData] = useState({
@@ -676,51 +678,24 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      {/* Navbar */}
-      <Navbar
-        expand="lg"
-        style={{
-          backgroundColor: '#000000',
-          padding: '10px 20px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        }}
-      >
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+     <Navbar expand="lg" style={{ backgroundColor: '#000000', padding: '10px 20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <Navbar.Brand href="/" style={{ display: 'flex', alignItems: 'center' }}>
           <img src={logo} alt="logo" style={{ height: '50px', marginRight: '10px' }} />
           <span style={{ color: '#fff', fontSize: '1.5rem', fontWeight: 'bold' }}>
             Tshwane University of Technology
           </span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: '#fff' }} />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: "#fff", marginLeft: "auto", backgroundColor: "white"}} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto" style={{ alignItems: 'center' }}>
             <Link to="/">
-              <Button
-                style={{
-                  backgroundColor: '#D50032',
-                  border: 'none',
-                  color: '#fff',
-                  padding: '10px 20px',
-                  borderRadius: '4px',
-                  fontWeight: 'bold',
-                  marginRight: '10px',
-                }}
-              >
+              <Button style={{ backgroundColor: '#D50032', border: 'none', color: '#fff', padding: '10px 20px', borderRadius: '4px', fontWeight: 'bold', marginRight: '10px', marginBottom: '15px' }}>
                 Home
               </Button>
             </Link>
             <Link to="/AboutPage">
-              <Button
-                style={{
-                  backgroundColor: '#D50032',
-                  border: 'none',
-                  color: '#fff',
-                  padding: '10px 20px',
-                  borderRadius: '4px',
-                  fontWeight: 'bold',
-                }}
-              >
+              <Button style={{ backgroundColor: '#D50032', border: 'none', color: '#fff', padding: '10px 20px', borderRadius: '4px', fontWeight: 'bold', marginRight: '10px', marginBottom: '15px' }}>
                 About
               </Button>
             </Link>
@@ -730,33 +705,28 @@ const LoginPage = () => {
 
       {/* Login Form */}
       <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh',
-          backgroundColor: '#003366',
-          color: '#fff', 
-          marginTop: "-100px"
-        }}
+        // style={{
+        //   display: 'flex',
+        //   justifyContent: 'center',
+        //   alignItems: 'center',
+        //   minHeight: '100vh',
+        //   backgroundColor: '#003366',
+        //   color: '#fff', 
+        //   marginTop: "-100px"
+        // }}
+        style={{ display: 'flex', justifyContent: 'center', 
+          alignItems: 'center', 
+          flexGrow: 1, backgroundImage: `url(${BgImage})`,
+           backgroundSize: 'cover', 
+           backgroundPosition: 'center', 
+           color: '#fff',
+           marginTop: "-100px" }}
+
+        
       >
         <div style={{ width: '100%', maxWidth: '400px' }}>
-          <form
-            onSubmit={handleSubmit}
-            style={{
-              padding: '30px',
-              backgroundColor: '#f8f9fa', // Light gray background for the form
-              borderRadius: '8px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              border: '2px solid #D50032', // Red border color
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-            }}
-          >
-            <h2 style={{ textAlign: 'center', color: '#D50032', fontWeight: 'bold' }}>
-              Login
-            </h2>
+        <form onSubmit={handleSubmit} style={{ padding: '30px', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '2px solid #D50032', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <h2 style={{ textAlign: 'center', color: '#D50032', fontWeight: 'bold' }}>Login</h2>
 
             <div style={{ marginBottom: '15px' }}>
               <label htmlFor="email" style={{ display: 'block', color: '#003366', fontWeight: 'bold' }}>

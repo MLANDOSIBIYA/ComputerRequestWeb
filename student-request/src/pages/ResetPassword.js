@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import BgImage from './components/BgImage.jpg';
+
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
