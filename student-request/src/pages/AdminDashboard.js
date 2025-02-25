@@ -57,17 +57,18 @@ const AdminDashboard = () => {
 
   const handleAssign = async (id) => {
     if (updatedRecords.has(id)) return;
-
+  
     setUpdatingId(id);
-
+  
     try {
-      const apiUrl = `http://localhost:5167/api/Computer/assign-computer/${102423456}`;
+      const request = requests.find((r) => r.id === id);
+      const apiUrl = `http://localhost:5167/api/Computer/assign-computer/${request.studentId}`;
       await axios.put(apiUrl);
-
-      const updatedRequests = requests.map((request) =>
-        request.id === id ? { ...request, status: "Assigned" } : request
+  
+      const updatedRequests = requests.map((r) =>
+        r.id === id ? { ...r, status: "Assigned" } : r
       );
-
+  
       setRequests(updatedRequests);
       updateMetrics(updatedRequests);
       setUpdatedRecords((prev) => new Set(prev).add(id));

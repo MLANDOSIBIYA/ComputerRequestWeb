@@ -1155,10 +1155,10 @@ const AdminDashboardLandingPage = () => {
 
   const sections = {
     Dashboard: { component: <ReportingAnalytics />, icon: "bi bi-house-door" },
-    Requests: { component: <AdminDashboard />, icon: "bi bi-list-check" },
+    Applications: { component: <AdminDashboard />, icon: "bi bi-list-check" },
     // VerifyStudent: { component: <EligibilityVerification />, icon: "bi bi-person-check" },
     Notifications: { component: <NotificationsPage />, icon: "bi bi-bell" },
-    Inventory: { component: <LaptopInventory />, icon: "bi bi-clock-history" },
+    Inventory: { component: <LaptopInventory />, icon: "bi bi-box-seam" },
     Settings: {
       component: (
         <div>
