@@ -1134,7 +1134,7 @@ import { useNavigate } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
 import ReportingAnalytics from "./ReportingAnalytics";
 import NotificationsPage from "./NotificationsPage";
-import EligibilityVerification from "./EligibilityVerification";
+//import EligibilityVerification from "./EligibilityVerification";
 import LaptopInventory from "./LaptopInventory";
 import { BsThreeDots } from "react-icons/bs";
 import logo from "./logo.jpg";
@@ -1156,9 +1156,9 @@ const AdminDashboardLandingPage = () => {
   const sections = {
     Dashboard: { component: <ReportingAnalytics />, icon: "bi bi-house-door" },
     Requests: { component: <AdminDashboard />, icon: "bi bi-list-check" },
-    VerifyStudent: { component: <EligibilityVerification />, icon: "bi bi-person-check" },
+    // VerifyStudent: { component: <EligibilityVerification />, icon: "bi bi-person-check" },
     Notifications: { component: <NotificationsPage />, icon: "bi bi-bell" },
-    History: { component: <LaptopInventory />, icon: "bi bi-clock-history" },
+    Inventory: { component: <LaptopInventory />, icon: "bi bi-clock-history" },
     Settings: {
       component: (
         <div>

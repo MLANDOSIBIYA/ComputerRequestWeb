@@ -464,42 +464,48 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const LaptopInventory = () => {
-  // Mock data for inventory
   const [computers, setComputers] = useState([]);
   const [newComputer, setNewComputer] = useState({
     ComputerName: '',
     ComputerVersion: '',
     serialNumber: '',
   });
-  const [isFormVisible, setIsFormVisible] = useState(false); // New state for form visibility
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const apiUrl = "http://localhost:5167/api/Computer/Add-Computer";
+  const viewPcApi = "http://localhost:5167/api/Computer/veiw-computers";
+
+  useEffect(() => {
+    const fetchComputers = async () => {
+      try {
+        const response = await axios.get(viewPcApi);
+        setComputers(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching computers:', error);
+        alert('Failed to load computer data');
+      }
+    };
+
+    fetchComputers();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewComputer({ ...newComputer, [name]: value });
   };
 
-  const apiUrl = "http://localhost:5167/api/Computer/Add-Computer";
   const addComputer = async () => {
     if (newComputer.ComputerName && newComputer.ComputerVersion && newComputer.serialNumber) {
-      const newComputerWithId = {
-        ...newComputer,
-        id: computers.length + 1, // generate new id based on current list length
-        condition: 'Refurbished', // Default condition
-      };
-  
       try {
-        // Make POST request to the API
         const response = await axios.post(apiUrl, newComputer);
-        
-        // Handle response and add to the list if successful
         if (response.status === 200 || response.status === 201) {
-          setComputers([...computers, newComputerWithId]);
-          setNewComputer({ ComputerName: '', ComputerVersion: '', serialNumber: '' });
+          setComputers([...computers, response.data]);
+          setNewComputer({ computerName: '', computerVersion: '', serialNumber: '' });
         } else {
           alert('Failed to add computer.');
         }
       } catch (error) {
-        // Log the error to the console for debugging
         console.error('Error adding computer:', error);
         alert('An error occurred while adding the computer.');
       }
@@ -508,153 +514,53 @@ const LaptopInventory = () => {
     }
   };
 
-  // Toggle form visibility
   const toggleForm = () => {
     setIsFormVisible(!isFormVisible);
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: '#003366',
-        color: '#ffffff',
-        minHeight: '100vh',
-        padding: '20px',
-      }}
-    >
-      
-
-      {/* Inventory Metrics */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          marginBottom: '20px',
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: '#D50032',
-            padding: '20px',
-            borderRadius: '8px',
-            textAlign: 'center',
-          }}
-        >
+    <div style={{ backgroundColor: '#003366', color: '#ffffff', minHeight: '100vh', padding: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
+        <div style={{ backgroundColor: '#D50032', padding: '20px', borderRadius: '8px', textAlign: 'center' }}>
           <h3>Total Refurbished Computers</h3>
           <p>{computers.length}</p>
         </div>
       </div>
 
-
-     {/* Button to toggle New Computer Form */}
-     <button
-        onClick={toggleForm}
-        style={{
-          backgroundColor: '#FFD700',
-          padding: '10px 20px',
-          borderRadius: '10px',
-          color: '#000',
-          cursor: 'pointer',
-          marginBottom: '20px',
-        }}
-      >
+      <button onClick={toggleForm} style={{ backgroundColor: '#FFD700', padding: '10px 20px', borderRadius: '10px', color: '#000', cursor: 'pointer', marginBottom: '20px' }}>
         {isFormVisible ? 'Close New Computer Form' : 'Add New Computer'}
       </button>
 
-      {/* Conditionally Render New Computer Form */}
       {isFormVisible && (
         <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-          <input
-            type="text"
-            name="ComputerName"  // Changed name to match the state property
-            placeholder="Computer Name"
-            value={newComputer.ComputerName}
-            onChange={handleInputChange}
-            style={{
-              margin: '5px',
-              padding: '10px',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-            }}
-          />
-          <input
-            type="text"
-            name="ComputerVersion"  // Changed name to match the state property
-            placeholder="Computer Version"
-            value={newComputer.ComputerVersion}
-            onChange={handleInputChange}
-            style={{
-              margin: '5px',
-              padding: '10px',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-            }}
-          />
-          <input
-            type="text"
-            name="serialNumber"
-            placeholder="Serial Number"
-            value={newComputer.serialNumber}
-            onChange={handleInputChange}
-            style={{
-              margin: '5px',
-              padding: '10px',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-            }}
-          />
-          <button
-            onClick={addComputer}
-            style={{
-              backgroundColor: '#FFD700',
-              padding: '10px 20px',
-              borderRadius: '10px',
-              color: '#000',
-              cursor: 'pointer',
-            }}
-          >
+          <input type="text" name="ComputerName" placeholder="Computer Name" value={newComputer.ComputerName} onChange={handleInputChange} style={{ margin: '5px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+          <input type="text" name="ComputerVersion" placeholder="Computer Version" value={newComputer.ComputerVersion} onChange={handleInputChange} style={{ margin: '5px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+          <input type="text" name="serialNumber" placeholder="Serial Number" value={newComputer.serialNumber} onChange={handleInputChange} style={{ margin: '5px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+          <button onClick={addComputer} style={{ backgroundColor: '#FFD700', padding: '10px 20px', borderRadius: '10px', color: '#000', cursor: 'pointer' }}>
             Add Computer
           </button>
         </div>
       )}
 
-            
-      {/* Laptop Details Table */}
       <h2 style={{ color: '#FFD700' }}>Computer Details</h2>
-      <table
-        style={{
-          width: '100%',
-          backgroundColor: '#ffffff',
-          color: '#000',
-          borderRadius: '8px',
-          overflow: 'hidden',
-          textAlign: 'left',
-        }}
-
-
-
-           
-
-
-
-      >
+      <table style={{ width: '100%', backgroundColor: '#ffffff', color: '#000', borderRadius: '8px', overflow: 'hidden', textAlign: 'left' }}>
         <thead>
           <tr>
             <th style={{ padding: '10px', border: '1px solid #ccc' }}>ID</th>
             <th style={{ padding: '10px', border: '1px solid #ccc' }}>Name</th>
             <th style={{ padding: '10px', border: '1px solid #ccc' }}>Version</th>
             <th style={{ padding: '10px', border: '1px solid #ccc' }}>Serial Number</th>
-            <th style={{ padding: '10px', border: '1px solid #ccc' }}>Condition</th>
+            {/* <th style={{ padding: '10px', border: '1px solid #ccc' }}>Condition</th> */}
           </tr>
         </thead>
         <tbody>
           {computers.map((computer) => (
             <tr key={computer.id}>
-              <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.id}</td>
-              <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.ComputerName}</td>
-              <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.ComputerVersion}</td>
+              <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.computerId}</td>
+              <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.computerName}</td>
+              <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.computerVersion}</td>
               <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.serialNumber}</td>
-              <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.condition}</td>
+              {/* <td style={{ padding: '10px', border: '1px solid #ccc' }}>{computer.condition}</td> */}
             </tr>
           ))}
         </tbody>
@@ -664,3 +570,4 @@ const LaptopInventory = () => {
 };
 
 export default LaptopInventory;
+
