@@ -630,6 +630,9 @@ const LaptopRequestForm = () => {
       if(response.data.flag)
       {
         toast.success(response.data.message);
+
+        // send confirmatiom to student when application is sucessful
+        axios.post(`http://localhost:5167/api/Email/confirmation/mail?studentNumber=${studentNumber}`)
       }
       else{
         toast.error(response.data.message); 
